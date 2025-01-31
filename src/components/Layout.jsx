@@ -8,6 +8,7 @@ const Layout = () => {
         <div>
             <Header />
             <Outlet />
+            <App />
         </div>
     );
 };

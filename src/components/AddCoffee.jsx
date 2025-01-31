@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const AddCoffee = () => {
+    const [coffees, setCoffees] = useState([]); // State to manage the coffee list
 
     const handleAddCoffee = event => {
         event.preventDefault();
@@ -14,16 +15,20 @@ const AddCoffee = () => {
         const photo = form.photo.value;
 
         const newCoffee = { name, chef, supplier, taste, category, details, photo };
-        console.log(newCoffee);
 
-    }
+        // Add the new coffee to the list
+        setCoffees([...coffees, newCoffee]);
+
+        // Clear the form
+        form.reset();
+    };
 
     return (
         <div className='lg:w-3/4 mx-auto'>
             <div className="text-center p-10">
                 <h1 className="text-5xl font-bold">Add Coffee!</h1>
                 <p className="py-6">
-                    Provident cupiditate voluptatem et in.Quaerat fugiat ut assumenda excepturi exercitationem
+                    Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
                     quasi. In deleniti eaque aut repudiandae et a id nisi.
                 </p>
             </div>
@@ -75,18 +80,34 @@ const AddCoffee = () => {
                         </div>
                     </div>
 
-
                     <div className="form-control">
                         <label className="label">
                             <span className="label-text">Photo URL</span>
                         </label>
                         <input type="text" name='photo' placeholder="Photo url" className="input input-bordered" required />
-
                     </div>
                     <div className="form-control mt-6">
                         <button className="btn btn-primary">Add Coffee</button>
                     </div>
                 </form>
+            </div>
+
+            {/* Display Added Coffees */}
+            <div className="mt-10">
+                <h2 className="text-3xl font-bold mb-5">Added Coffees:</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    {coffees.map((coffee, index) => (
+                        <div key={index} className="card bg-base-100 shadow-xl p-5">
+                            <img src={coffee.photo} alt={coffee.name} className="rounded-xl mb-4 h-40 w-full object-cover" />
+                            <h3 className="text-xl font-bold">{coffee.name}</h3>
+                            <p><strong>Chef:</strong> {coffee.chef}</p>
+                            <p><strong>Supplier:</strong> {coffee.supplier}</p>
+                            <p><strong>Taste:</strong> {coffee.taste}</p>
+                            <p><strong>Category:</strong> {coffee.category}</p>
+                            <p><strong>Details:</strong> {coffee.details}</p>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     );
